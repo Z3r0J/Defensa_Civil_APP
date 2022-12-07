@@ -3,12 +3,13 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useColorScheme} from 'react-native';
 import {HomeComponent} from '../home/HomeComponent';
 import {DrawerCustomComponent} from './DrawerCustomComponent';
-import {useAuthenticatedContext} from '../../contexts/AuthenticatedContext';
+import {useGeneralContext} from '../../contexts/GeneralContext';
+import {LoadingComponent} from '../loading/LoadingComponent';
 
 const Drawer = createDrawerNavigator();
-export const NavigationDrawerComponent = () => {
+const NavigationDrawerComponent = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const auth = useAuthenticatedContext();
+  const auth = useGeneralContext();
   return (
     <Drawer.Navigator
       screenOptions={{headerTintColor: isDarkMode ? 'white' : 'black'}}
@@ -24,7 +25,7 @@ export const NavigationDrawerComponent = () => {
           />
           <Drawer.Screen
             name="stories"
-            component={HomeComponent}
+            component={LoadingComponent}
             options={{title: 'Historia'}}
           />
 
@@ -79,7 +80,7 @@ export const NavigationDrawerComponent = () => {
       {auth.isAuthenticated && (
         <>
           <Drawer.Screen
-            name="news"
+            name="name"
             component={HomeComponent}
             options={{title: 'Noticias'}}
           />
@@ -108,3 +109,5 @@ export const NavigationDrawerComponent = () => {
     </Drawer.Navigator>
   );
 };
+
+export default NavigationDrawerComponent;

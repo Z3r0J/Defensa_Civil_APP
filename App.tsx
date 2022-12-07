@@ -1,16 +1,17 @@
-import React, {type PropsWithChildren} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {useColorScheme, View} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
-import {Text} from 'react-native-paper';
-import {NavigationDrawerComponent} from './src/components/navigation/NavigationDrawerComponent';
-import {AuthenticatedProvider} from './src/contexts/AuthenticatedContext';
+import NavigationDrawerComponent from './src/components/navigation/NavigationDrawerComponent';
+import {GeneralProvider} from './src/contexts/GeneralContext';
+import {LoadingComponent} from './src/components/loading/LoadingComponent';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const MyDarkTheme = {
     ...DarkTheme,
@@ -28,19 +29,19 @@ const App = () => {
     },
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+  }, []);
+
   return (
-    <React.Suspense
-      fallback={
-        <View>
-          <Text>Cargando...</Text>
-        </View>
-      }>
-      <AuthenticatedProvider>
-        <NavigationContainer theme={isDarkMode ? MyDarkTheme : MyLightTheme}>
-          <NavigationDrawerComponent />
-        </NavigationContainer>
-      </AuthenticatedProvider>
-    </React.Suspense>
+    <GeneralProvider>
+      {isLoading && <LoadingComponent />}
+      <NavigationContainer theme={isDarkMode ? MyDarkTheme : MyLightTheme}>
+        <NavigationDrawerComponent />
+      </NavigationContainer>
+    </GeneralProvider>
   );
 };
 
