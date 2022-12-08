@@ -18,7 +18,8 @@ export const HomeComponent = () => {
               style={{
                 backgroundColor: 'white',
                 borderRadius: 8,
-                height: '85%',
+                height: '95%',
+                width: '80%',
                 marginEnd: 9,
               }}>
               <Image
@@ -31,7 +32,7 @@ export const HomeComponent = () => {
                   fontSize: 28,
                   fontWeight: 'bold',
                   paddingTop: 20,
-                  paddingLeft: 8,
+                  paddingStart: 18,
                   width: '58%',
                 }}>
                 {item.title}
@@ -40,10 +41,11 @@ export const HomeComponent = () => {
                 style={{
                   color: '#222',
                   fontSize: 17,
-                  width: '60%',
+                  width: '65%',
                   textAlign: 'auto',
+                  paddingTop: 6,
                   paddingStart: 17,
-                  marginBottom: 8,
+                  marginBottom: 10,
                 }}>
                 {item.description}
               </Text>
