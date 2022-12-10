@@ -59,13 +59,13 @@ const NavigationDrawerComponent = () => {
 
           <Drawer.Screen
             name="prevent"
-            component={HomeComponent}
+            component={MensuaresComponent}
             options={{title: 'Medidas Preventivas'}}
           />
 
           <Drawer.Screen
             name="members"
-            component={HomeComponent}
+            component={MembersComponent}
             options={{title: 'Miembros'}}
           />
 
