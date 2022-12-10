@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Card, Paragraph, Title} from 'react-native-paper';
+import {Button, Card, Paragraph, Title} from 'react-native-paper';
 import {getNewsAsync} from '../../services/getServices';
 
 export function NewsComponent() {
   const [News, setNewsAsync] = useState<any[]>([]);
-
+  const isDarkMode = useColorScheme() === 'dark';
+  
   useEffect(function () {
     async function getNews() {
       await getNewsAsync().then(r => {
@@ -24,7 +25,7 @@ export function NewsComponent() {
           return (
             <View>
               <Card style={{
-                    margin: 10
+                    margin: 10,
               }}>
                 <Card.Cover source={{uri: r.foto}}/>
                 <Card.Content>
@@ -36,7 +37,9 @@ export function NewsComponent() {
                         fontSize: 15,
                         fontWeight: 'bold'
                     }}>- {r.fecha} -</Paragraph>
-                    <Paragraph>{r.contenido}</Paragraph>
+                  <Button icon="chevron-right" mode="contained" buttonColor={isDarkMode ? '#FA822F' : '#086B9D'} style={{
+                    
+                  }}>Ver más</Button>
                 </Card.Content>
               </Card>
             </View>
