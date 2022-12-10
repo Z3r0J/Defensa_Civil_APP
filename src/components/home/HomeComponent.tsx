@@ -3,6 +3,7 @@ import {Button, Dimensions, Image, Text, View} from 'react-native';
 import {useGeneralContext} from '../../contexts/GeneralContext';
 import Carousel from 'react-native-reanimated-carousel';
 import 'react-native-reanimated';
+import { Paragraph } from 'react-native-paper';
 
 export const HomeComponent = () => {
   const context = useGeneralContext();
@@ -33,22 +34,21 @@ export const HomeComponent = () => {
                   fontWeight: 'bold',
                   paddingTop: 20,
                   paddingStart: 18,
-                  width: '58%',
+                  width: '75%',
                 }}>
                 {item.title}
               </Text>
-              <Text
+              <Paragraph
                 style={{
-                  color: '#222',
-                  fontSize: 17,
-                  width: '65%',
+
+                  width: '75%',
                   textAlign: 'auto',
                   paddingTop: 6,
                   paddingStart: 17,
-                  marginBottom: 10,
+                  marginBottom: 25,
                 }}>
                 {item.description}
-              </Text>
+              </Paragraph>
             </View>
           );
         }}

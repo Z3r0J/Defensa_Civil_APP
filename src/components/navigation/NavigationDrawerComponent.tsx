@@ -7,6 +7,9 @@ import {useGeneralContext} from '../../contexts/GeneralContext';
 import {LoadingComponent} from '../loading/LoadingComponent';
 import {VideosComponent} from '../video/VideosComponent';
 import {HostelsComponent} from '../hostels/HostelsComponent';
+import {HistoyComponent} from '../history/HistoryComponent'
+import { ServicesComponent } from '../Services/ServicesComponent';
+import { NewsComponent } from '../news/NewsComponent';
 
 const Drawer = createDrawerNavigator();
 const NavigationDrawerComponent = () => {
@@ -27,18 +30,18 @@ const NavigationDrawerComponent = () => {
           />
           <Drawer.Screen
             name="stories"
-            component={LoadingComponent}
+            component={HistoyComponent}
             options={{title: 'Historia'}}
           />
 
           <Drawer.Screen
             name="services"
-            component={HomeComponent}
+            component={ServicesComponent}
             options={{title: 'Servicios'}}
           />
           <Drawer.Screen
             name="news"
-            component={HomeComponent}
+            component={NewsComponent}
             options={{title: 'Noticias'}}
           />
           <Drawer.Screen
