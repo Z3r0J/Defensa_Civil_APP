@@ -7,6 +7,10 @@ import {useGeneralContext} from '../../contexts/GeneralContext';
 import {LoadingComponent} from '../loading/LoadingComponent';
 import {VideosComponent} from '../video/VideosComponent';
 import {HostelsComponent} from '../hostels/HostelsComponent';
+import {DetailsHostelComponent} from '../hostels/DetailsHostelComponent';
+import {HistoyComponent} from '../history/HistoryComponent';
+import {ServicesComponent} from '../Services/ServicesComponent';
+import {NewsComponent} from '../news/NewsComponent';
 
 const Drawer = createDrawerNavigator();
 const NavigationDrawerComponent = () => {
