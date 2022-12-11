@@ -1,21 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {getMiembros} from '../../services/getServices';
+import {getMembers} from '../../services/getServices';
 
 
 export function MembersComponent() {
     const [miembros, setMiembros] = useState<any[]>([]);
-    const [allMiembros, setAllMiembros] = useState<any[]>([]);
     const [search, setSearch] = useState<string>('');
     const isDarkMode = useColorScheme() === 'dark';
   
     useEffect(function () {
-      async function getMembers() {
-        await getMiembros().then(m => {
+      async function getMiembros() {
+        await getMembers().then(m => {
           setMiembros(m);
-          setAllMiembros(m);
-        });
+        
       }
   
       getMiembros();
