@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -9,6 +10,7 @@ export function HostelsComponent() {
   const [allRefugees, setAllRefugees] = useState<any[]>([]);
   const [search, setSearch] = useState<string>('');
   const isDarkMode = useColorScheme() === 'dark';
+  const navigate = useNavigation();
 
   useEffect(function () {
     async function getHostels() {
@@ -63,6 +65,10 @@ export function HostelsComponent() {
                   borderBottomWidth: 3,
                   borderBottomColor: isDarkMode ? '#FA822F' : '#086B9D',
                   color: isDarkMode ? 'white' : 'black',
+                  fontSize: 18,
+                }}
+                onPress={() => {
+                  navigate.navigate('refugeeDetails', {data: r});
                 }}>
                 {r.edificio}
               </Text>

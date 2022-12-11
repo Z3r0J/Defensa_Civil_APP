@@ -7,6 +7,7 @@ import {useGeneralContext} from '../../contexts/GeneralContext';
 import {LoadingComponent} from '../loading/LoadingComponent';
 import {VideosComponent} from '../video/VideosComponent';
 import {HostelsComponent} from '../hostels/HostelsComponent';
+import {DetailsHostelComponent} from '../hostels/DetailsHostelComponent';
 
 const Drawer = createDrawerNavigator();
 const NavigationDrawerComponent = () => {
@@ -45,6 +46,14 @@ const NavigationDrawerComponent = () => {
             name="hostels"
             component={HostelsComponent}
             options={{title: 'Albergues'}}
+          />
+          <Drawer.Screen
+            name="refugeeDetails"
+            component={DetailsHostelComponent}
+            options={{
+              title: 'Detalles Albergues',
+              drawerItemStyle: {display: 'none'},
+            }}
           />
           <Drawer.Screen
             name="video"
