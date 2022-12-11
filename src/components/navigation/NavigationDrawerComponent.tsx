@@ -11,6 +11,7 @@ import {DetailsHostelComponent} from '../hostels/DetailsHostelComponent';
 import {HistoyComponent} from '../history/HistoryComponent';
 import {ServicesComponent} from '../Services/ServicesComponent';
 import {NewsComponent} from '../news/NewsComponent';
+import {NewDetailsComponent} from '../news/NewDetailsComponent';
 
 const Drawer = createDrawerNavigator();
 const NavigationDrawerComponent = () => {
@@ -44,6 +45,14 @@ const NavigationDrawerComponent = () => {
             name="news"
             component={NewsComponent}
             options={{title: 'Noticias'}}
+          />
+          <Drawer.Screen
+            name="newDetails"
+            component={NewDetailsComponent}
+            options={{
+              title: 'Detalles Noticias',
+              drawerItemStyle: {display: 'none'},
+            }}
           />
           <Drawer.Screen
             name="hostels"

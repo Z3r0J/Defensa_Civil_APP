@@ -1,15 +1,17 @@
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {Image, Text, useColorScheme, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {Button} from 'react-native-paper';
 
 export const DetailsHostelComponent = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const data = route.params?.data;
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={{padding: 16, marginTop: 8}}>
+    <ScrollView style={{padding: 16, marginTop: 8}}>
       <Image
         source={require('../../../assets/images/logo_defensa_civil_ultimate.png')}
         resizeMode="contain"
@@ -76,9 +78,13 @@ export const DetailsHostelComponent = () => {
       <Button
         mode="contained"
         buttonColor={isDarkMode ? '#FA822F' : '#086B9D'}
-        style={{marginTop: 15}}>
+        style={{marginTop: 15}}
+        icon={'chevron-left'}
+        onPress={() => {
+          navigation.navigate('hostels');
+        }}>
         Atras
       </Button>
-    </View>
+    </ScrollView>
   );
 };
