@@ -1,59 +1,51 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {useColorScheme, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Alert, ScrollView, useColorScheme, View} from 'react-native';
 import {Button, Card, Paragraph, Title} from 'react-native-paper';
-import {getNewsAsync} from '../../services/getServices';
+import {useGeneralContext} from '../../contexts/GeneralContext';
+import {getSituation} from '../../services/postServices';
 
-export function NewsComponent() {
-  const [News, setNewsAsync] = useState<any[]>([]);
-  const navigation = useNavigation();
+export const MySituationComponent = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const context = useGeneralContext();
+  const [mySituation, setSituation] = useState<any[]>([]);
+  const navigate = useNavigation();
+  useEffect(() => {
+    const getSituationAsync = async () => {
+      await getSituation(context.token).then(s =>
+        s.exito ? setSituation(s.datos) : Alert.alert('Error', s.mensaje),
+      );
+    };
 
-  useEffect(function () {
-    async function getNews() {
-      await getNewsAsync().then(r => {
-        setNewsAsync(r);
-      });
-    }
-
-    getNews();
+    getSituationAsync();
   }, []);
-
   return (
     <ScrollView>
-      {News &&
-        News.map(r => {
+      {mySituation &&
+        mySituation.map(ms => {
           return (
-            <View key={r.id}>
+            <View key={ms.id}>
               <Card
                 style={{
                   margin: 10,
                   borderBottomWidth: 4,
                   borderBottomColor: isDarkMode ? '#FA822F' : '#086B9D',
                 }}>
-                <Card.Cover source={{uri: r.foto}} />
+                <Card.Cover source={{uri: ms.foto}} />
                 <Card.Content>
                   <Title
                     style={{
                       fontSize: 23,
                       fontWeight: 'bold',
                     }}>
-                    {r.titulo}
+                    {ms.titulo}
                   </Title>
-                  <Paragraph
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 'bold',
-                    }}>
-                    - {r.fecha} -
-                  </Paragraph>
                   <Button
                     icon="chevron-right"
                     mode="contained"
                     buttonColor={isDarkMode ? '#FA822F' : '#086B9D'}
                     onPress={() => {
-                      navigation.navigate('newDetails', {data: r});
+                      navigate.navigate('myreportdetails', {data: ms});
                     }}>
                     Ver más
                   </Button>
@@ -64,4 +56,4 @@ export function NewsComponent() {
         })}
     </ScrollView>
   );
-}
+};

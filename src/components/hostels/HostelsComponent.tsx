@@ -57,7 +57,7 @@ export function HostelsComponent() {
       {refugees &&
         refugees.map(r => {
           return (
-            <View style={{marginStart: 5, marginEnd: 5}}>
+            <View style={{marginStart: 5, marginEnd: 5}} key={r.id}>
               <Text
                 style={{
                   marginTop: 2,

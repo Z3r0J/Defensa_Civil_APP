@@ -4,7 +4,6 @@ import {useColorScheme} from 'react-native';
 import {HomeComponent} from '../home/HomeComponent';
 import {DrawerCustomComponent} from './DrawerCustomComponent';
 import {useGeneralContext} from '../../contexts/GeneralContext';
-import {LoadingComponent} from '../loading/LoadingComponent';
 import {VideosComponent} from '../video/VideosComponent';
 import {HostelsComponent} from '../hostels/HostelsComponent';
 import {DetailsHostelComponent} from '../hostels/DetailsHostelComponent';
@@ -12,6 +11,17 @@ import {HistoyComponent} from '../history/HistoryComponent';
 import {ServicesComponent} from '../Services/ServicesComponent';
 import {NewsComponent} from '../news/NewsComponent';
 import {NewDetailsComponent} from '../news/NewDetailsComponent';
+import {MensuaresComponent} from '../measure/MedidasPreventivas';
+import {MembersComponent} from '../members/Miembros';
+import {RefugeesMapComponent} from '../maps/RefugeesMapComponent';
+import {DetailsMeasures} from '../measure/DetailsMeasures';
+import {VolunteerFormComponent} from '../volunteer/VolunteerFormComponent';
+import {LoginComponent} from '../login/LoginComponent';
+import {Button} from 'react-native-paper';
+import {ChangePasswordComponent} from '../password/ChangePasswordComponent';
+import {SituationMapsComponent} from '../maps/SituationMapsComponent';
+import {MySituationComponent} from '../situation/MySituationComponent';
+import {DetailsSituationComponent} from '../situation/DetailsSituationComponent';
 
 const Drawer = createDrawerNavigator();
 const NavigationDrawerComponent = () => {
@@ -19,7 +29,20 @@ const NavigationDrawerComponent = () => {
   const auth = useGeneralContext();
   return (
     <Drawer.Navigator
-      screenOptions={{headerTintColor: isDarkMode ? 'white' : 'black'}}
+      screenOptions={{
+        headerTintColor: isDarkMode ? 'white' : 'black',
+        headerRight: () =>
+          auth.isAuthenticated && (
+            <Button
+              mode="contained"
+              icon={'power'}
+              buttonColor={isDarkMode ? '#FA822F' : '#086B9D'}
+              style={{width: 16, marginEnd: 6}}
+              onPress={() => auth.closeSession()}>
+              {''}
+            </Button>
+          ),
+      }}
       drawerContent={props => {
         return <DrawerCustomComponent {...props} />;
       }}>
@@ -74,7 +97,7 @@ const NavigationDrawerComponent = () => {
           />
           <Drawer.Screen
             name="maps"
-            component={HomeComponent}
+            component={RefugeesMapComponent}
             options={{title: 'Mapa'}}
           />
 
@@ -85,6 +108,15 @@ const NavigationDrawerComponent = () => {
           />
 
           <Drawer.Screen
+            name="detailsprevent"
+            component={DetailsMeasures}
+            options={{
+              title: 'Detalles de Medidas Preventivas',
+              drawerItemStyle: {display: 'none'},
+            }}
+          />
+
+          <Drawer.Screen
             name="members"
             component={MembersComponent}
             options={{title: 'Miembros'}}
@@ -92,7 +124,7 @@ const NavigationDrawerComponent = () => {
 
           <Drawer.Screen
             name="beavolunteer"
-            component={HomeComponent}
+            component={VolunteerFormComponent}
             options={{title: 'Quiero ser voluntario'}}
           />
 
@@ -104,7 +136,7 @@ const NavigationDrawerComponent = () => {
 
           <Drawer.Screen
             name="login"
-            component={HomeComponent}
+            component={LoginComponent}
             options={{title: 'Iniciar Sesión'}}
           />
         </>
@@ -114,8 +146,16 @@ const NavigationDrawerComponent = () => {
         <>
           <Drawer.Screen
             name="name"
-            component={HomeComponent}
+            component={NewsComponent}
             options={{title: 'Noticias'}}
+          />
+          <Drawer.Screen
+            name="newDetails"
+            component={NewDetailsComponent}
+            options={{
+              title: 'Detalles Noticias',
+              drawerItemStyle: {display: 'none'},
+            }}
           />
           <Drawer.Screen
             name="report"
@@ -124,17 +164,25 @@ const NavigationDrawerComponent = () => {
           />
           <Drawer.Screen
             name="myreport"
-            component={HomeComponent}
+            component={MySituationComponent}
             options={{title: 'Mis Situaciones'}}
           />
           <Drawer.Screen
+            name="myreportdetails"
+            component={DetailsSituationComponent}
+            options={{
+              title: 'Detalles de Mis Situaciones',
+              drawerItemStyle: {display: 'none'},
+            }}
+          />
+          <Drawer.Screen
             name="mapreport"
-            component={HomeComponent}
+            component={SituationMapsComponent}
             options={{title: 'Mapa de Situaciones'}}
           />
           <Drawer.Screen
             name="changepass"
-            component={HomeComponent}
+            component={ChangePasswordComponent}
             options={{title: 'Cambiar Contraseña'}}
           />
         </>

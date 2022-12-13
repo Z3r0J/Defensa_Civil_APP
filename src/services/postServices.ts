@@ -2,6 +2,7 @@ import {ChangePWD} from './class/ChangePasswordClass';
 import {Volunteer} from './class/VolunteerClass';
 import {Login} from './class/LoginClass';
 import {apiUrl} from '../helpers/apiUrl';
+import {Alert} from 'react-native';
 
 export const getSituation = async (token: string) => {
   const tk = new FormData();
@@ -9,38 +10,45 @@ export const getSituation = async (token: string) => {
   tk.append('token', token);
 
   return await apiUrl
-    .post('situaciones.php', tk)
-    .then(s => {
-      if (s.data.exito) {
-        return s.data.datos;
-      }
-
-      throw Error(s.data.mensaje);
+    .post('situaciones.php', tk, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
     })
-    .catch(e => console.log(e));
+    .then(s => {
+      return s.data;
+    })
+    .catch(e => {
+      return e;
+    });
 };
 
 export const LoginAsync = async (usuario: Login) => {
   const usuarioDatos = new FormData();
 
   usuarioDatos.append('cedula', usuario.Documents);
-  usuarioDatos.append('contraseña', usuario.Password);
+  usuarioDatos.append('clave', usuario.Password);
 
   return await apiUrl
-    .post('iniciar_sesion.php', usuarioDatos)
-    .then(u => {
-      if (u.data.exito) {
-        return u.data.datos;
-      }
-
-      throw Error(u.data.mensaje);
+    .post('iniciar_sesion.php', usuarioDatos, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
     })
-    .catch(e => console.log(e));
+    .then(u => {
+      return u.data;
+    })
+    .catch(e => {
+      return e;
+    });
 };
 
 export const postNewVolunteer = async (volunteer: Volunteer) => {
   const newVolunteer = new FormData();
 
+  console.log(volunteer);
   newVolunteer.append('cedula', volunteer.Documents);
   newVolunteer.append('nombre', volunteer.Name);
   newVolunteer.append('apellido', volunteer.LastName);
@@ -49,15 +57,18 @@ export const postNewVolunteer = async (volunteer: Volunteer) => {
   newVolunteer.append('telefono', volunteer.Phone);
 
   return await apiUrl
-    .post('registro.php', newVolunteer)
-    .then(v => {
-      if (v.data.exito) {
-        return v.data.datos;
-      }
-
-      throw Error(v.data.mensaje);
+    .post('registro.php', newVolunteer, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
     })
-    .catch(e => console.log(e));
+    .then(v => {
+      return v.data;
+    })
+    .catch(e => {
+      return e;
+    });
 };
 
 export const postChangePWD = async (newPWD: ChangePWD) => {
@@ -68,12 +79,16 @@ export const postChangePWD = async (newPWD: ChangePWD) => {
   changePW.append('clave_nueva', newPWD.NewPassword);
 
   return await apiUrl
-    .post('cambiar_clave.php', ChangePWD)
-    .then(pw => {
-      if (pw.data.exito) {
-        return pw.data.datos;
-      }
-      throw Error(pw.data.mensaje);
+    .post('cambiar_clave.php', changePW, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
     })
-    .catch(e => console.log(e));
+    .then(pw => {
+      return pw.data;
+    })
+    .catch(e => {
+      return console.log(e);
+    });
 };
