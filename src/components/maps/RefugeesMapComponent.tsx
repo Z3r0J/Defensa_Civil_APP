@@ -1,4 +1,5 @@
-import React from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback} from 'react';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import {View} from 'react-native';
@@ -8,15 +9,16 @@ import {getRefugees} from '../../services/getServices';
 export const RefugeesMapComponent = () => {
   const [refugees, setRefugees] = useState<any[]>([]);
 
-  useEffect(() => {
+  const focusEffect = useCallback(() => {
     const getRefugeesAsync = async () => {
       await getRefugees().then(r => {
-        console.log(r);
         setRefugees(r);
       });
     };
     getRefugeesAsync();
   }, []);
+  useFocusEffect(focusEffect);
+
   return (
     <View>
       <MapView

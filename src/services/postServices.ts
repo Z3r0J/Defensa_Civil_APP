@@ -1,3 +1,4 @@
+import {Report} from './class/ReportClass';
 import {ChangePWD} from './class/ChangePasswordClass';
 import {Volunteer} from './class/VolunteerClass';
 import {Login} from './class/LoginClass';
@@ -48,7 +49,6 @@ export const LoginAsync = async (usuario: Login) => {
 export const postNewVolunteer = async (volunteer: Volunteer) => {
   const newVolunteer = new FormData();
 
-  console.log(volunteer);
   newVolunteer.append('cedula', volunteer.Documents);
   newVolunteer.append('nombre', volunteer.Name);
   newVolunteer.append('apellido', volunteer.LastName);
@@ -89,6 +89,31 @@ export const postChangePWD = async (newPWD: ChangePWD) => {
       return pw.data;
     })
     .catch(e => {
-      return console.log(e);
+      return e;
+    });
+};
+
+export const ReportSituation = async (newSituation: Report) => {
+  const register = new FormData();
+
+  register.append('titulo', newSituation.title);
+  register.append('descripcion', newSituation.description);
+  register.append('foto', newSituation.photo);
+  register.append('latitud', newSituation.latitude);
+  register.append('longitud', newSituation.longitude);
+  register.append('token', newSituation.token);
+
+  return await apiUrl
+    .post('nueva_situacion.php', register, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
+    })
+    .then(ns => {
+      return ns.data;
+    })
+    .catch(e => {
+      return e;
     });
 };

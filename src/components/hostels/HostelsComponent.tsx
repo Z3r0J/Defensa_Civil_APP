@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, TextInput} from 'react-native-paper';
@@ -12,7 +12,7 @@ export function HostelsComponent() {
   const isDarkMode = useColorScheme() === 'dark';
   const navigate = useNavigation();
 
-  useEffect(function () {
+  const focusEffect = useCallback(function () {
     async function getHostels() {
       await getRefugees().then(r => {
         setRefugees(r);
@@ -22,6 +22,8 @@ export function HostelsComponent() {
 
     getHostels();
   }, []);
+
+  useFocusEffect(focusEffect);
 
   function buscar() {
     const newrf = allRefugees.filter(x => x.edificio.includes(search));
