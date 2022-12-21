@@ -1,5 +1,6 @@
 import React, {Suspense, useEffect, useState} from 'react';
-import {useColorScheme, View} from 'react-native';
+import {Platform, useColorScheme, View} from 'react-native';
+import {handleCamera, handleStorage} from './src/helpers/Permission';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -30,9 +31,21 @@ const App = () => {
   };
 
   useEffect(() => {
+
+    const getPermission = async() =>{
+      if (Platform.OS === 'android' && !(await handleCamera())) {
+        return;
+      }
+      if (Platform.OS === 'android' && !(await handleStorage())) {
+        return;
+      }
+    }
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
+
+    getPermission();
   }, []);
 
   return (

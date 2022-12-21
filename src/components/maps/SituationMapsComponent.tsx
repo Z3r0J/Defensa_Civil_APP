@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {useGeneralContext} from '../../contexts/GeneralContext';
@@ -7,7 +8,7 @@ import {getSituation} from '../../services/postServices';
 export const SituationMapsComponent = () => {
   const context = useGeneralContext();
   const [mySituation, setSituation] = useState<any[]>([]);
-  useEffect(() => {
+  const focusEffect = useCallback(() => {
     const getSituationAsync = async () => {
       await getSituation(context.token).then(s =>
         s.exito ? setSituation(s.datos) : Alert.alert('Error', s.mensaje),
@@ -16,6 +17,7 @@ export const SituationMapsComponent = () => {
 
     getSituationAsync();
   }, []);
+  useFocusEffect(focusEffect);
 
   return (
     <View>

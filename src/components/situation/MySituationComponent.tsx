@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, ScrollView, useColorScheme, View} from 'react-native';
 import {Button, Card, Paragraph, Title} from 'react-native-paper';
 import {useGeneralContext} from '../../contexts/GeneralContext';
@@ -10,7 +10,8 @@ export const MySituationComponent = () => {
   const context = useGeneralContext();
   const [mySituation, setSituation] = useState<any[]>([]);
   const navigate = useNavigation();
-  useEffect(() => {
+
+  const focusEffect = useCallback(() => {
     const getSituationAsync = async () => {
       await getSituation(context.token).then(s =>
         s.exito ? setSituation(s.datos) : Alert.alert('Error', s.mensaje),
@@ -19,6 +20,9 @@ export const MySituationComponent = () => {
 
     getSituationAsync();
   }, []);
+
+  useFocusEffect(focusEffect);
+
   return (
     <ScrollView>
       {mySituation &&

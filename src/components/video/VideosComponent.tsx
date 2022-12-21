@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, Text, View, useColorScheme} from 'react-native';
 import {getVideosAsync} from '../../services/getServices';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {Card} from 'react-native-paper';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const VideosComponent = () => {
   const [videos, setVideos] = useState<[]>([]);
   const isDarkMode = useColorScheme() === 'dark';
-
-  useEffect(() => {
+  const focusEffect = useCallback(() => {
     const getVideos = async () => {
       await getVideosAsync().then(r => setVideos(r));
     };
 
     getVideos();
   }, []);
+
+  useFocusEffect(focusEffect);
 
   return (
     <ScrollView>
@@ -29,7 +31,8 @@ export const VideosComponent = () => {
                 borderBottomWidth: 2,
                 borderBottomColor: isDarkMode ? '#FA822F' : '#086B9D',
                 margin: 8,
-              }}>
+              }}
+              key={v.id}>
               <Card.Content>
                 <YoutubePlayer height={300} videoId={v?.link} key={v?.id} />
                 <Text

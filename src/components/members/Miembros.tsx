@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Card, Title} from 'react-native-paper';
@@ -8,7 +9,7 @@ export function MembersComponent() {
   const [miembros, setMiembros] = useState<any[]>([]);
   const isDarkMode = useColorScheme() === 'dark';
 
-  useEffect(function () {
+  const focusEffect = useCallback(function () {
     async function getMiembros() {
       await getMembers().then(m => {
         setMiembros(m);
@@ -17,6 +18,8 @@ export function MembersComponent() {
 
     getMiembros();
   }, []);
+
+  useFocusEffect(focusEffect);
 
   return (
     <ScrollView>

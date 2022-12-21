@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Card, Paragraph, Title} from 'react-native-paper';
@@ -8,7 +9,7 @@ export function ServicesComponent() {
   const [Service, setServiceAsync] = useState<any[]>([]);
   const isDarkMode = useColorScheme() === 'dark';
 
-  useEffect(function () {
+  const focusEffect = useCallback(function () {
     async function getServices() {
       await getServicesAsync().then(r => {
         setServiceAsync(r);
@@ -18,12 +19,14 @@ export function ServicesComponent() {
     getServices();
   }, []);
 
+  useFocusEffect(focusEffect);
+
   return (
     <ScrollView>
       {Service &&
         Service.map(r => {
           return (
-            <View>
+            <View key={r.id}>
               <Card
                 style={{
                   margin: 10,

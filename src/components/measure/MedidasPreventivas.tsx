@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Text, useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {TextInput} from 'react-native-paper';
@@ -10,7 +10,7 @@ export function MensuaresComponent() {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation();
 
-  useEffect(function () {
+  const focusEffect = useCallback(function () {
     async function getMensuares() {
       await getMeasure().then(r => {
         setMedidas(r);
@@ -19,6 +19,8 @@ export function MensuaresComponent() {
 
     getMensuares();
   }, []);
+
+  useFocusEffect(focusEffect);
 
   return (
     <ScrollView>

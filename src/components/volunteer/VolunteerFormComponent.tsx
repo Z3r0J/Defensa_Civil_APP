@@ -30,9 +30,12 @@ export const VolunteerFormComponent = () => {
     if (isComplete) {
       return await postNewVolunteer(volunteer)
         .then(r => {
-          ClearForm();
-          Alert.alert('Registrado Correctamente', r);
-          return navigate.navigate('login');
+          if (r.exito) {
+            ClearForm();
+            Alert.alert('Registrado Correctamente', r.mensaje);
+            return navigate.navigate('login');
+          }
+          return Alert.alert('Error', r.mensaje);
         })
         .catch(e => {
           return Alert.alert('Error', e);

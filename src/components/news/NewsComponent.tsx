@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useColorScheme, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Card, Paragraph, Title} from 'react-native-paper';
@@ -10,7 +10,7 @@ export function NewsComponent() {
   const navigation = useNavigation();
   const isDarkMode = useColorScheme() === 'dark';
 
-  useEffect(function () {
+  const focusEffect = useCallback(function () {
     async function getNews() {
       await getNewsAsync().then(r => {
         setNewsAsync(r);
@@ -19,6 +19,8 @@ export function NewsComponent() {
 
     getNews();
   }, []);
+
+  useFocusEffect(focusEffect);
 
   return (
     <ScrollView>
